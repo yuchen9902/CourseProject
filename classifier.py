@@ -13,7 +13,7 @@ def count(train_set,train_labels,type):
                     output[word]=1
     return output
 
-def prob(Count_dict,train_set,laplace):
+def prob(Count_dict,laplace):
     prob_dict = {}
     totType = len(Count_dict)
     totWord = 0
@@ -34,28 +34,48 @@ def unigram(train_data,train_label,test_data):
     laplace = 0.3
     pos_prior = 0.95
 
-    posProb_dict,unk_pos = prob(posCount_dict,train_data,laplace)
-    negProb_dict,unk_neg = prob(negCount_dict,train_data,laplace)
+    posProb_dict,unk_pos = prob(posCount_dict,laplace)
+    negProb_dict,unk_neg = prob(negCount_dict,laplace)
 
     yhats = []
-    for doc in tqdm(test_data,disable=False):
-        pos = 0
-        neg = 0
-        for word in doc:
-            if word in posProb_dict:
-                pos += math.log(posProb_dict[word])
-            else:
-                pos += math.log(unk_pos)
-            if word in negProb_dict:
-                neg += math.log(negProb_dict[word])
-            else:
-                neg += math.log(unk_neg)
-        pos +=  math.log(pos_prior)   
-        neg += math.log(1-pos_prior)  
-        if pos>neg:
-            yhats.append(1)
+
+
+    pos = 0
+    neg = 0
+    for word in test_data:
+        if word in posProb_dict:
+            pos += math.log(posProb_dict[word])
         else:
-            yhats.append(0)
+            pos += math.log(unk_pos)
+        if word in negProb_dict:
+            neg += math.log(negProb_dict[word])
+        else:
+            neg += math.log(unk_neg)
+    pos +=  math.log(pos_prior)   
+    neg += math.log(1-pos_prior)  
+    if pos>neg:
+        yhats.append(1)
+    else:
+        yhats.append(0)
+
+    # for doc in tqdm(test_data,disable=False):
+    #     pos = 0
+    #     neg = 0
+    #     for word in doc:
+    #         if word in posProb_dict:
+    #             pos += math.log(posProb_dict[word])
+    #         else:
+    #             pos += math.log(unk_pos)
+    #         if word in negProb_dict:
+    #             neg += math.log(negProb_dict[word])
+    #         else:
+    #             neg += math.log(unk_neg)
+    #     pos +=  math.log(pos_prior)   
+    #     neg += math.log(1-pos_prior)  
+    #     if pos>neg:
+    #         yhats.append(1)
+    #     else:
+    #         yhats.append(0)
     
     return yhats
 
