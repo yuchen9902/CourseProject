@@ -5,13 +5,13 @@ from nltk.tokenize import RegexpTokenizer
 tokenizer = RegexpTokenizer(r'\w+')
 def main():
     train_dir = 'data/train'
-    test_dir = 'data/test2'
+    test_dir = 'data/test'
     ##################### For running on provided test data ###################
 
 
     test_data,test_label,train_data,train_label = load_data.loadData(train_dir, test_dir)
     
-    predictor = classifier.bigram(train_data,train_label,test_data)
+    predictor = classifier.unigram(train_data,train_label,test_data)
     accuracy = numpy.mean(predictor==test_label)
     print(accuracy)
 
@@ -24,5 +24,6 @@ def main():
     #     print("This is a Negative movie review!")
     # else:
     #     print("This is a Positive movie review!")
+        
 if __name__ == "__main__":
     main()

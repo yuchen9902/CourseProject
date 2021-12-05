@@ -40,42 +40,42 @@ def unigram(train_data,train_label,test_data):
     yhats = []
 
 #############################For running customize input#########################
-    pos = 0
-    neg = 0
-    for word in test_data:
-        if word in posProb_dict:
-            pos += math.log(posProb_dict[word])
-        else:
-            pos += math.log(unk_pos)
-        if word in negProb_dict:
-            neg += math.log(negProb_dict[word])
-        else:
-            neg += math.log(unk_neg)
-    pos +=  math.log(pos_prior)   
-    neg += math.log(1-pos_prior)  
-    if pos>neg:
-        yhats.append(1)
-    else:
-        yhats.append(0)
-    #############################For running test folder#########################
-    # for doc in tqdm(test_data,disable=False):
-    #     pos = 0
-    #     neg = 0
-    #     for word in doc:
-    #         if word in posProb_dict:
-    #             pos += math.log(posProb_dict[word])
-    #         else:
-    #             pos += math.log(unk_pos)
-    #         if word in negProb_dict:
-    #             neg += math.log(negProb_dict[word])
-    #         else:
-    #             neg += math.log(unk_neg)
-    #     pos +=  math.log(pos_prior)   
-    #     neg += math.log(1-pos_prior)  
-    #     if pos>neg:
-    #         yhats.append(1)
+    # pos = 0
+    # neg = 0
+    # for word in test_data:
+    #     if word in posProb_dict:
+    #         pos += math.log(posProb_dict[word])
     #     else:
-    #         yhats.append(0)
+    #         pos += math.log(unk_pos)
+    #     if word in negProb_dict:
+    #         neg += math.log(negProb_dict[word])
+    #     else:
+    #         neg += math.log(unk_neg)
+    # pos +=  math.log(pos_prior)   
+    # neg += math.log(1-pos_prior)  
+    # if pos>neg:
+    #     yhats.append(1)
+    # else:
+    #     yhats.append(0)
+    #############################For running test folder#########################
+    for doc in tqdm(test_data,disable=False):
+        pos = 0
+        neg = 0
+        for word in doc:
+            if word in posProb_dict:
+                pos += math.log(posProb_dict[word])
+            else:
+                pos += math.log(unk_pos)
+            if word in negProb_dict:
+                neg += math.log(negProb_dict[word])
+            else:
+                neg += math.log(unk_neg)
+        pos +=  math.log(pos_prior)   
+        neg += math.log(1-pos_prior)  
+        if pos>neg:
+            yhats.append(1)
+        else:
+            yhats.append(0)
     
     return yhats
 
