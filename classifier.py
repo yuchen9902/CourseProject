@@ -39,7 +39,7 @@ def unigram(train_data,train_label,test_data):
 
     yhats = []
 
-
+#############################For running customize input#########################
     pos = 0
     neg = 0
     for word in test_data:
@@ -57,7 +57,7 @@ def unigram(train_data,train_label,test_data):
         yhats.append(1)
     else:
         yhats.append(0)
-
+    #############################For running test folder#########################
     # for doc in tqdm(test_data,disable=False):
     #     pos = 0
     #     neg = 0

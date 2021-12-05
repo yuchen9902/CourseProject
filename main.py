@@ -4,9 +4,10 @@ import numpy
 from nltk.tokenize import RegexpTokenizer
 tokenizer = RegexpTokenizer(r'\w+')
 def main():
-    #For running on provided test data
     train_dir = 'data/train'
     test_dir = 'data/test2'
+    #For running on provided test data
+
 
     # test_data,test_label,train_data,train_label = load_data.loadData(train_dir, test_dir)
     
